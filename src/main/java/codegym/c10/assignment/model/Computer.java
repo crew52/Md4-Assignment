@@ -19,7 +19,7 @@ public class Computer {
     private String producer;
 
     @ManyToOne
-    @JoinColumn(name = "type_id", nullable = false)
+    @JoinColumn(name = "type_id")
     private Type type;
 
     public Computer(Long id, String code, String name, String producer, Type type) {
