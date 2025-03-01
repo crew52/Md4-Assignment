@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/layout :: head">
-    <title>List Type</title>
+    <title th:text="#{index.title.type}"></title>
 </head>
 <body>
-<h3>Types</h3>
+<h3 th:text="#{index.title.type}"></h3>
 <p>
     <a th:href="@{/types/create}">
         Add new type

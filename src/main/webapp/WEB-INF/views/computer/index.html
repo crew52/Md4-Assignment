@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/layout :: head">
-    <title>List Computer</title>
+    <title th:text="#{index.title.computer}"></title>
 </head>
 <body>
-<h3>Computers</h3>
+<h3 th:text="#{index.title.computer}"></h3>
 <p>
     <a th:href="@{/computers/create}">Add new Computer</a>
 </p>
