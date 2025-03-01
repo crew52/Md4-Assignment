@@ -32,7 +32,7 @@
     <tbody>
     <tr th:each="t, tStatus : ${types}">
         <td th:text="${tStatus.count}"></td>
-        <td> th:text="${t.getName()}"></td>
+        <td th:text="${t.getName()}"></td>
         <td><a th:href="@{/types/update/{id}(id=${t.getId()})}">update</a></td>
         <td><a th:href="@{/types/delete/{id}(id=${t.getId()})}">delete</a></td>
     </tr>
