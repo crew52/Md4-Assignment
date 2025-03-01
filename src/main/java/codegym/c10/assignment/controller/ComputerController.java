@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -56,8 +58,16 @@ public class ComputerController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("computer") Computer computer,
+    public String create(@Validated @ModelAttribute("computer") Computer computer,
+                         BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+//        computerService.save(computer);
+//        redirectAttributes.addFlashAttribute("message", "Create new computer successfully");
+//        return "redirect:/computers";
+
+        if (bindingResult.hasFieldErrors()) {
+            return "/computer/create";
+        }
         computerService.save(computer);
         redirectAttributes.addFlashAttribute("message", "Create new computer successfully");
         return "redirect:/computers";

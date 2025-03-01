@@ -18,6 +18,7 @@
         <div>
             <label for="code">Code</label>
             <input type="text" id="code" th:field="*{code}" required/>
+            <p th:if="${#fields.hasErrors('code')}" th:errors="*{code}" style="color:red">Code Error</p>
         </div>
 
         <div>

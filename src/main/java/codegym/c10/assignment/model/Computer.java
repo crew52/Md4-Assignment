@@ -1,6 +1,10 @@
 package codegym.c10.assignment.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "computer")
@@ -9,6 +13,8 @@ public class Computer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Code cannot be empty")
+    @Size(min = 3, max = 5)
     @Column(nullable = false, unique = true)
     private String code;
 
@@ -22,7 +28,7 @@ public class Computer {
     @JoinColumn(name = "type_id")
     private Type type;
 
-    public Computer(Long id, String code, String name, String producer, Type type) {
+    public Computer(Long id, @NotEmpty @Size(min = 3, max = 5)String code, String name, String producer, Type type) {
         this.id = id;
         this.code = code;
         this.name = name;
