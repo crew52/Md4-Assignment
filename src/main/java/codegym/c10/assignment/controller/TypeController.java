@@ -1,5 +1,6 @@
 package codegym.c10.assignment.controller;
 
+import codegym.c10.assignment.dto.ITypeDTO;
 import codegym.c10.assignment.model.Computer;
 import codegym.c10.assignment.model.Type;
 import codegym.c10.assignment.service.IComputerService;
@@ -88,5 +89,13 @@ public class TypeController {
             return new ModelAndView("redirect:/types");
         }
         return new ModelAndView("/error_404");
+    }
+
+    @GetMapping("/count")
+    public ModelAndView countProvince() {
+        ModelAndView modelAndView = new ModelAndView("/type/count");
+        Iterable<ITypeDTO> typeDTOS = typeService.getAllTypes();
+        modelAndView.addObject("typeDTOS", typeDTOS);
+        return modelAndView;
     }
 }

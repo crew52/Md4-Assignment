@@ -15,13 +15,18 @@
         Computers
     </a>
 </p>
+<p>
+    <a th:href="@{/types/count}">
+        Count
+    </a>
+</p>
 <div class="notify">
     <div th:if="${message}">
         <span th:text="${message}"></span>
     </div>
 </div>
 
-<table id="types">
+<table>
     <thead>
     <tr>
         <th>STT</th>

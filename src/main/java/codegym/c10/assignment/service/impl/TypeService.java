@@ -1,5 +1,6 @@
 package codegym.c10.assignment.service.impl;
 
+import codegym.c10.assignment.dto.ITypeDTO;
 import codegym.c10.assignment.model.Type;
 import codegym.c10.assignment.repository.ITypeRepository;
 import codegym.c10.assignment.service.ITypeService;
@@ -30,5 +31,10 @@ public class TypeService implements ITypeService {
     @Override
     public void remove(Long id) {
         typeRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<ITypeDTO> getAllTypes() {
+        return typeRepository.getAllTypes();
     }
 }
