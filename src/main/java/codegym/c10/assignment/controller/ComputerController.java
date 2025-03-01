@@ -62,4 +62,32 @@ public class ComputerController {
         redirectAttributes.addFlashAttribute("message", "Create new computer successfully");
         return "redirect:/computers";
     }
+
+    @GetMapping("/update/{id}")
+    public ModelAndView updateForm(@PathVariable Long id) {
+        Optional<Computer> computer = computerService.findById(id);
+        if (computer.isPresent()) {
+            ModelAndView modelAndView = new ModelAndView("/computer/update");
+            modelAndView.addObject("computer", computer.get());
+            return modelAndView;
+        } else {
+            return new ModelAndView("/error_404");
+        }
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@ModelAttribute("computer") Computer computer,
+                         RedirectAttributes redirect) {
+        computerService.save(computer);
+        redirect.addFlashAttribute("message", "Update computer successfully");
+        return "redirect:/computers";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id,
+                         RedirectAttributes redirect) {
+        computerService.remove(id);
+        redirect.addFlashAttribute("message", "Delete computer successfully");
+        return "redirect:/computers";
+    }
 }
