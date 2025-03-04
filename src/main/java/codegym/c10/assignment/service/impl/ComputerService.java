@@ -1,5 +1,6 @@
 package codegym.c10.assignment.service.impl;
 
+import codegym.c10.assignment.exception.NotFountException;
 import codegym.c10.assignment.model.Computer;
 import codegym.c10.assignment.model.Type;
 import codegym.c10.assignment.repository.IComputerRepository;
@@ -41,9 +42,19 @@ public class ComputerService implements IComputerService {
         computerRepository.save(computer);
     }
 
+//    @Override
+//    public Optional<Computer> findById(Long id) {
+//        return computerRepository.findById(id);
+//    }
+
     @Override
-    public Optional<Computer> findById(Long id) {
-        return computerRepository.findById(id);
+    public Optional<Computer> findById(Long id) throws NotFountException {
+        Optional<Computer> computer = computerRepository.findById(id);
+        if (computer.isPresent()) {
+            return computer;
+        }else {
+            throw new NotFountException();
+        }
     }
 
     @Override

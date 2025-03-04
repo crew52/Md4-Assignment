@@ -1,5 +1,6 @@
 package codegym.c10.assignment.controller;
 
+import codegym.c10.assignment.exception.NotFountException;
 import codegym.c10.assignment.model.Computer;
 import codegym.c10.assignment.model.Type;
 import codegym.c10.assignment.service.IComputerService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -74,15 +76,11 @@ public class ComputerController {
     }
 
     @GetMapping("/update/{id}")
-    public ModelAndView updateForm(@PathVariable Long id) {
+    public ModelAndView updateForm(@PathVariable Long id) throws NotFountException {
         Optional<Computer> computer = computerService.findById(id);
-        if (computer.isPresent()) {
             ModelAndView modelAndView = new ModelAndView("/computer/update");
             modelAndView.addObject("computer", computer.get());
             return modelAndView;
-        } else {
-            return new ModelAndView("/error_404");
-        }
     }
 
     @PostMapping("/update/{id}")
@@ -99,5 +97,10 @@ public class ComputerController {
         computerService.remove(id);
         redirect.addFlashAttribute("message", "Delete computer successfully");
         return "redirect:/computers";
+    }
+
+    @ExceptionHandler(NotFountException.class)
+    public String handleNotFound(Model model, NotFountException e) {
+        return "/error_404";
     }
 }

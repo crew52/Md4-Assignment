@@ -1,6 +1,7 @@
 package codegym.c10.assignment.service.impl;
 
 import codegym.c10.assignment.dto.ITypeDTO;
+import codegym.c10.assignment.exception.NotFountException;
 import codegym.c10.assignment.model.Type;
 import codegym.c10.assignment.repository.ITypeRepository;
 import codegym.c10.assignment.service.ITypeService;
@@ -24,8 +25,13 @@ public class TypeService implements ITypeService {
     }
 
     @Override
-    public Optional<Type> findById(Long id) {
-        return typeRepository.findById(id);
+    public Optional<Type> findById(Long id) throws NotFountException {
+        Optional<Type> typeOptional =  typeRepository.findById(id);
+        if (typeOptional.isPresent()) {
+            return typeOptional;
+        }else {
+            throw new NotFountException();
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package codegym.c10.assignment.configuration;
 
+import codegym.c10.assignment.handle.ComputerExceptionHandle;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -7,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -40,6 +42,7 @@ import java.util.Properties;
 @EnableJpaRepositories("codegym.c10.assignment.repository")
 @ComponentScan(basePackages = "codegym.c10.assignment")
 @EnableSpringDataWebSupport
+@EnableAspectJAutoProxy
 public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -139,5 +142,10 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         localeResolver.setDefaultLocale(new Locale("en"));
         return localeResolver;
+    }
+
+    @Bean
+    public ComputerExceptionHandle computerExceptionHandle(){
+        return new ComputerExceptionHandle();
     }
 }

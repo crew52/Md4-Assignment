@@ -1,5 +1,7 @@
 package codegym.c10.assignment.service;
 
+import codegym.c10.assignment.exception.NotFountException;
+
 import java.util.Optional;
 
 public interface IGenerateService<T> {
@@ -7,7 +9,7 @@ public interface IGenerateService<T> {
 
     void save(T t);
 
-    Optional<T> findById(Long id);
+    Optional<T> findById(Long id) throws NotFountException;
 
     void remove(Long id);
 }
