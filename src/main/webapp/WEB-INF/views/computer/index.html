@@ -24,7 +24,7 @@
         <span th:text="${message}"></span>
     </div>
 </div>
-
+<p th:if="${visitCount}" th:text="'Số lần truy cập: ' + ${visitCount}"></p>
 <table id="computers">
     <thead>
     <tr>

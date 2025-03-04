@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @Controller
@@ -32,10 +35,37 @@ public class ComputerController {
         return typeService.findAll();
     }
 
+//    @GetMapping
+//    public ModelAndView listComputer(Pageable pageable) {
+//        Page<Computer> computers = computerService.findAll(pageable);
+//        return new ModelAndView("/computer/index", "computers", computers);
+//    }
+
     @GetMapping
-    public ModelAndView listComputer(Pageable pageable) {
+    public ModelAndView listComputer(Pageable pageable, HttpServletRequest request, HttpServletResponse response) {
         Page<Computer> computers = computerService.findAll(pageable);
-        return new ModelAndView("/computer/index", "computers", computers);
+
+        // Lấy số lần truy cập từ cookie
+        int visitCount = 0;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("visitCount")) {
+                    visitCount = Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+        visitCount++;
+
+        // Cập nhật cookie
+        Cookie visitCookie = new Cookie("visitCount", String.valueOf(visitCount));
+        visitCookie.setMaxAge(10000); // 60
+        response.addCookie(visitCookie);
+
+        ModelAndView modelAndView = new ModelAndView("/computer/index");
+        modelAndView.addObject("computers", computers);
+        modelAndView.addObject("visitCount", visitCount);
+        return modelAndView;
     }
 
     @GetMapping("/search")
